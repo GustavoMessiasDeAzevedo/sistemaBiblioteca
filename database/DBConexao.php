@@ -8,9 +8,11 @@ class DBConexao{
     private $username = "root";
     private $password = "senac2023";
 
-    private $conx;
+    public $conx;
     private static $instance = null;
 
+
+   
     public function __construct()
     {
         try{
