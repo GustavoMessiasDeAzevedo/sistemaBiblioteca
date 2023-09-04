@@ -1,27 +1,26 @@
 <?php
 
-
-class Usuario{
-
+class Aluno{
 
     protected $db;
-    protected $table = "usuarios"; 
+    protected $table = "alunos"; 
 
     public function __construct()
     {
         $this->db = DBConexao::getConexao();
     }
 
-    /**
+     /**
     *@param int $id;
-    *@return Usuario;
+    *@return Aluno;
 
     */
+
     public function buscar($id){
 
 
         try{
-            $query = "SELECT * FROM {$this->table} WHERE id_usuario = :id";
+            $query = "SELECT * FROM {$this->table} WHERE id_aluno = :id";
             $stmt = $this->db->prepare($query);
         }catch(PDOException $e){
             echo "Erro na preparação da consulta: ". $e->getMessage();
@@ -37,9 +36,11 @@ class Usuario{
                 //Vai ser substituido pelo formulário
                 echo "ID: " . $usuario['id'] . "<br>";
                 echo "Nome: " . $usuario['nome'] . "<br>";
+                echo "CPF: " . $usuario['cpf'] . "<br>";
                 echo "Email: " . $usuario['email'] . "<br>";
-                echo "Senha: " . $usuario['senha'] . "<br>";
-                echo "Perfil: " . $usuario['perfil'] . "<br>";
+                echo "Telefone: " . $usuario['telefone'] . "<br>";
+                echo "Celular: " . $usuario['celular'] . "<br>";
+                echo "Data do Nascimento: " . $usuario['data_nascimento'] . "<br>";
             }
 
             echo "Consulta bem sucedida!";
@@ -48,17 +49,20 @@ class Usuario{
          }
     }
 
+
     public function listar(){
 
     }
+
     /**
     *@param array;
     *@return bool;
 
     */
+
     public function cadastrar($dados){
         try{
-            $query = "INSERT INTO {$this->table}(nome, email, senha, perfil) VALUES (:nome, :email, :senha, :perfil)";
+            $query = "INSERT INTO {$this->table}(nome, cpf, email, telefone, celular, data_nascimento) VALUES (:nome, :cpf, :email, :telefone, :celular, :data_nascimento)";
 
             $stmt = $this->db->prepare($query);
 
@@ -69,9 +73,11 @@ class Usuario{
             echo "Erro na preparação da consulta: ". $e->getMessage();
         }
             $stmt->bindParam(':nome', $dados['nome']);
+            $stmt->bindParam(':cpf', $dados['cpf']);
             $stmt->bindParam(':email', $dados['email']);
-            $stmt->bindParam(':senha', $dados['senha']);
-            $stmt->bindParam(':perfil', $dados['perfil']);
+            $stmt->bindParam(':telefone', $dados['telefone']);
+            $stmt->bindParam(':celular', $dados['celular']);
+            $stmt->bindParam(':data_nascimento', $dados['data_nascimento']);
 
         try{
             $stmt->execute();
@@ -88,10 +94,11 @@ class Usuario{
     *@return bool;
 
     */
+
     public function editar($id, $dados){
 
         try{
-            $query = "UPDATE {$this->table} SET nome = :nome ,email = :email, senha = :senha, perfil = :perfil WHERE id_usuario = :id";
+            $query = "UPDATE {$this->table} SET nome = :nome , cpf = :cpf, email = :email, telefone = :telefone, celular = :celular, data_nascimento = :data_nascimento WHERE id_aluno = :id";
 
             $stmt = $this->db->prepare($query);
 
@@ -99,10 +106,12 @@ class Usuario{
             echo "Erro de preparação de consulta: ". $e->getMessage();
         }
 
-            $stmt->bindParam(':nome', $dados['nome']);
-            $stmt->bindParam(':email', $dados['email']);
-            $stmt->bindParam(':senha', $dados['senha']);
-            $stmt->bindParam(':perfil', $dados['perfil']);
+        $stmt->bindParam(':nome', $dados['nome']);
+        $stmt->bindParam(':cpf', $dados['cpf']);
+        $stmt->bindParam(':email', $dados['email']);
+        $stmt->bindParam(':telefone', $dados['telefone']);
+        $stmt->bindParam(':celular', $dados['celular']);
+        $stmt->bindParam(':data_nascimento', $dados['data_nascimento']);
 
             try{
                 $stmt->execute();
@@ -113,11 +122,11 @@ class Usuario{
 
 
     }
-    
+
     public function excluir($id){
         try{
 
-            $query = "DELETE FROM {$this->table} WHERE id_usuario = :id";
+            $query = "DELETE FROM {$this->table} WHERE id_aluno = :id";
             $stmt = $this->db->prepare($query);
         }catch(PDOException $e){
             echo "Erro de preparação de consulta: ". $e->getMessage();
@@ -132,4 +141,8 @@ class Usuario{
             echo "Erro na exclusão: ". $e->getMessage();
         }
     }
+
+
+
+
 }
