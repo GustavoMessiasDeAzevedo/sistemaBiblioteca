@@ -1,5 +1,6 @@
 <?php
 
+require_once $_SERVER['DOCUMENT_ROOT']. "/models/Livro.php";
 class LivroController{
 
     private $livromodel;
@@ -7,5 +8,10 @@ class LivroController{
     public function __construct()
     {
        $this->livromodel = new Livro();
+    }
+
+
+    public function listarLivro(){
+        return $this->livromodel->listar();
     }
 }
