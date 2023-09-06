@@ -1,5 +1,5 @@
 <?php
-
+    require_once $_SERVER ['DOCUMENT_ROOT'] . "/database/DBConexao.php";
 class Aluno{
 
     protected $db;
@@ -51,6 +51,17 @@ class Aluno{
 
 
     public function listar(){
+
+        try{
+            $query = "SELECT * FROM {$this->table}";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        }catch(PDOException $e){
+            echo "Erro na preparação da consulta: ". $e->getMessage();
+            return null ;
+        }
+        
 
     }
 
@@ -112,6 +123,7 @@ class Aluno{
         $stmt->bindParam(':telefone', $dados['telefone']);
         $stmt->bindParam(':celular', $dados['celular']);
         $stmt->bindParam(':data_nascimento', $dados['data_nascimento']);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
             try{
                 $stmt->execute();
