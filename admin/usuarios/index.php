@@ -38,8 +38,8 @@
                     <td><?=$user->email ?></td>
                     <td><?=$user->perfil ?></td>
                     <td>
-                        <a href="#" class="btn btn-primary">Editar</a>
-                        <a href="#" class="btn btn-danger">Editar</a>
+                        <a href="/admin/usuarios/editar.php" class="btn btn-primary">Editar</a>
+                        <a href="#" class="btn btn-danger">Excluir</a>
                     </td>
                 </tr>
                     

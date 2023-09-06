@@ -6,6 +6,6 @@ class LivroController{
 
     public function __construct()
     {
-       // $this->livromodel = new Livro();
+       $this->livromodel = new Livro();
     }
 }
