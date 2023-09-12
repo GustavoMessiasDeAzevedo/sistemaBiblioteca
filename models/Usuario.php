@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
     require_once $_SERVER ['DOCUMENT_ROOT'] . "/database/DBConexao.php";
 class Usuario{
 
@@ -26,18 +26,7 @@ class Usuario{
             $stmt ->bindParam(':id', $id);
 
             $stmt->execute();
-            // $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-            // if($usuario){
-
-            //     //Vai ser substituido pelo formulário
-            //     echo "ID: " . $usuario['id'] . "<br>";
-            //     echo "Nome: " . $usuario['nome'] . "<br>";
-            //     echo "Email: " . $usuario['email'] . "<br>";
-            //     echo "Senha: " . $usuario['senha'] . "<br>";
-            //     echo "Perfil: " . $usuario['perfil'] . "<br>";
-            // }
-
-            echo "Consulta bem sucedida!";
+           
             return $stmt->fetch(PDO::FETCH_OBJ);
         }catch(PDOException $e){
             echo "Erro na preparação da consulta: ". $e->getMessage();
@@ -80,10 +69,14 @@ class Usuario{
             $stmt->bindParam(':senha', $dados['senha']);
             $stmt->bindParam(':perfil', $dados['perfil']);
             $stmt->execute();
-          
+
+            $_SESSION['sucesso'] = "Cadastro realizado com sucesso!";
+          return true;
 
         }catch(PDOException $e){
             echo "Erro na preparação da consulta: ". $e->getMessage();
+            $_SESSION['erro'] = "Erro ao cadastrar o usuario!";
+            return false;
         }
            
 
